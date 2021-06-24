@@ -1,0 +1,38 @@
+concat
+
+Each company in the accounts table wants to create an email address for each primary_poc. The email address should be the first name of the primary_poc . last name primary_poc @ company name .com.
+
+SELECT fname, lname,
+      CONCAT(fname, '.', lname, '@', '.com') as email FROM (SELECT 
+LEFT(primary_poc, STRPOS(primary_poc, ' ')) as fname,
+RIGHT(primary_poc, Length(primary_poc) - POSITION(' ' IN primary_poc)) as lname                                                                                               from accounts)sub;
+
+WITH t1 AS (
+ SELECT LEFT(primary_poc,     STRPOS(primary_poc, ' ') -1 ) first_name,  RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) last_name, name
+ FROM accounts)
+SELECT first_name, last_name, CONCAT(first_name, '.', last_name, '@', name, '.com')
+FROM t1;
+
+Each company in the accounts table wants to create an email address for each primary_poc. The email address should be the first name of the primary_poc . last name primary_poc @ company name .com.
+
+WITH t1 AS (
+ SELECT LEFT(primary_poc,     STRPOS(primary_poc, ' ') -1 ) first_name,  RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) last_name, name
+ FROM accounts)
+SELECT first_name, last_name, CONCAT(first_name, '.', last_name, '@', name, '.com')
+FROM t1;
+
+We would also like to create an initial password, which they will change after their first log in. The first password will be the first letter of the primary_poc's first name (lowercase), then the last letter of their first name (lowercase), the first letter of their last name (lowercase), the last letter of their last name (lowercase), the number of letters in their first name, the number of letters in their last name, and then the name of the company they are working with, all capitalized with no spaces. 
+
+WITH t1 AS(
+  SELECT 
+LEFT(primary_poc, POSITION(' ' in primary_poc)) as fname,
+RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) as lname, name
+                                 
+FROM accounts)
+                   
+     SELECT fname,
+ lname, name,
+    CONCAT(lower(fname), '.', lower(lname), lower(REPLACE(name, ' ', '')), '@', '.com') as email
+     FROM t1;
+     
+                    
