@@ -1,0 +1,27 @@
+Cast
+
+SELECT date, LEFT(date, 2) as day,  substr(date, 1,2) subday
+from sf_crime_data
+limit 10;
+
+SELECT (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || (SUBSTR(date, 4,2)))                                                                     FROM sf_crime_data
+limit 10;
+
+pip use as concatenate function
+
+SELECT (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || (SUBSTR(date, 4,2))) as date_col,
+  CONCAT(SUBSTR(date, 7, 4), '-' , LEFT(date, 2), '-' ,(SUBSTR(date, 4,2))) as concate_date
+                                            
+  SELECT (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || (SUBSTR(date, 4,2))) as date_col,
+ 
+ CONCAT(SUBSTR(date, 7, 4), '-' , LEFT(date, 2), '-' ,(SUBSTR(date, 4,2))) as concate_date,
+
+ CAST(CONCAT(SUBSTR(date, 7, 4), '-' , LEFT(date, 2), '-' ,(SUBSTR(date, 4,2))) as date) as concate_datetime                                                                                                                                                       FROM sf_crime_data
+limit 10;    
+
+
+SELECT date orig_date, (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2)) new_date
+FROM sf_crime_data;
+
+SELECT date orig_date, (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2))::DATE new_date
+FROM sf_crime_data;                                      
